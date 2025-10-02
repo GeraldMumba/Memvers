@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemVerse - Decentralized Content & NFT Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-bg-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .gradient-bg-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .nft-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .nft-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .dropdown-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        .stats-card-2 {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+        }
+        
+        .stats-card-3 {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+        }
+        
+        .stats-card-4 {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+        }
+        
+        .logo-text {
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: left 0.3s ease;
+        }
+        
+        .nav-link:hover::before {
+            left: 0;
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-gradient-2 {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient-2:hover {
+            background: linear-gradient(135deg, #f5576c, #f093fb);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+        }
+        
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+        }
+        
+        .mobile-menu {
+            display: none;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Navigation -->
+    <nav class="gradient-bg shadow-2xl sticky top-0 z-50 backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer" onclick="showPage('home')">
+                    <div class="mr-3">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="20" r="18" fill="url(#gradient1)" stroke="white" stroke-width="2"/>
+                            <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea"/>
+                                    <stop offset="50%" style="stop-color:#764ba2"/>
+                                    <stop offset="100%" style="stop-color:#f093fb"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-bold text-white">
+                        Mem<span class="logo-text">Verse</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <button onclick="showPage('home')" class="nav-link text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-all">Home</button>
+                        <button onclick="showPage('upload')" class="nav-link text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-all">Upload Content</button>
+                        
+                        <div class="dropdown relative">
+                            <button class="nav-link text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-all flex items-center">
+                                NFTs 
+                                <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-content absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl z-50 overflow-hidden">
+                                <button onclick="showPage('nfts-art')" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white w-full text-left transition-all">🎨 Digital Art</button>
+                                <button onclick="showPage('nfts-music')" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white w-full text-left transition-all">🎵 Music & Audio</button>
+                                <button onclick="showPage('nfts-gaming')" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white w-full text-left transition-all">🎮 Gaming Items</button>
+                                <button onclick="showPage('nfts-collectibles')" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white w-full text-left transition-all">💎 Collectibles</button>
+                                <button onclick="showPage('nfts-photography')" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white w-full text-left transition-all">📸 Photography</button>
+                            </div>
+                        </div>
+                        
+                        <button onclick="showPage('trending')" class="nav-link text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-all">Trending</button>
+                        <button onclick="showPage('create-nft')" class="nav-link text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-all">Create NFT</button>
+                        <button onclick="showPage('profile')" class="nav-link text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-all">Profile</button>
+                        <button onclick="showPage('admin')" class="nav-link text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-all">Dashboard</button>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="showPage('wallet')" class="btn-gradient text-white px-6 py-2 rounded-full font-medium transition-all">Connect Wallet</button>
+                    <button onclick="showPage('login')" class="border-2 border-white text-white hover:bg-white hover:text-purple-600 px-6 py-2 rounded-full font-medium transition-all">Login</button>
+                    
+                    <!-- Mobile menu button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden bg-white bg-opacity-10 backdrop-blur-lg rounded-lg mt-2 p-4">
+                <div class="space-y-2">
+                    <button onclick="showPage('home')" class="block w-full text-left px-4 py-2 text-white hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">Home</button>
+                    <button onclick="showPage('upload')" class="block w-full text-left px-4 py-2 text-white hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">Upload Content</button>
+                    <button onclick="showPage('trending')" class="block w-full text-left px-4 py-2 text-white hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">Trending</button>
+                    <button onclick="showPage('create-nft')" class="block w-full text-left px-4 py-2 text-white hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">Create NFT</button>
+                    <button onclick="showPage('profile')" class="block w-full text-left px-4 py-2 text-white hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">Profile</button>
+                    <button onclick="showPage('admin')" class="block w-full text-left px-4 py-2 text-white hover:bg-white hover:bg-opacity-20 rounded-lg transition-all">Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="gradient-bg min-h-screen flex items-center hero-pattern relative overflow-hidden">
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+                <div class="text-center">
+                    <h1 class="text-7xl md:text-8xl font-bold mb-8 animate-float">
+                        Welcome to <span class="logo-text">MemVerse</span>
+                    </h1>
+                    <p class="text-2xl md:text-3xl mb-12 max-w-4xl mx-auto leading-relaxed">
+                        The ultimate decentralized platform where creators earn <span class="text-yellow-400 font-bold">MVS tokens</span> for their content and trade exclusive NFTs in a vibrant marketplace.
+                    </p>
+                    <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                        <button onclick="showPage('upload')" class="btn-gradient text-white px-10 py-4 rounded-full font-bold text-xl">
+                            🚀 Start Creating
+                        </button>
+                        <button onclick="showPage('trending')" class="btn-gradient-2 text-white px-10 py-4 rounded-full font-bold text-xl">
+                            🔥 Explore NFTs
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating Elements -->
+            <div class="absolute top-20 left-10 animate-pulse-slow">
+                <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full opacity-20"></div>
+            </div>
+            <div class="absolute bottom-20 right-10 animate-pulse-slow" style="animation-delay: 1s;">
+                <div class="w-32 h-32 bg-gradient-to-br from-blue-500 to-green-500 rounded-full opacity-20"></div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-24 bg-gray-800 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-5xl font-bold text-center mb-20">Why Choose MemVerse?</h2>
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div class="glass-effect p-10 rounded-2xl text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-6xl mb-6">💰</div>
+                        <h3 class="text-2xl font-bold mb-6">Earn MVS Tokens</h3>
+                        <p class="text-lg leading-relaxed">Get rewarded with MVS tokens for every piece of content you create and share on our platform. The more engaging your content, the more you earn!</p>
+                    </div>
+                    <div class="glass-effect p-10 rounded-2xl text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-6xl mb-6">🎨</div>
+                        <h3 class="text-2xl font-bold mb-6">Create & Trade NFTs</h3>
+                        <p class="text-lg leading-relaxed">Mint your own NFTs with our easy-to-use tools and trade in our vibrant marketplace with collectors from around the world.</p>
+                    </div>
+                    <div class="glass-effect p-10 rounded-2xl text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-6xl mb-6">🔒</div>
+                        <h3 class="text-2xl font-bold mb-6">Decentralized & Secure</h3>
+                        <p class="text-lg leading-relaxed">Built on blockchain technology ensuring your assets, earnings, and creative works are always secure and truly owned by you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-24 bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16">Platform Statistics</h2>
+                <div class="grid md:grid-cols-4 gap-8 text-center">
+                    <div class="stats-card p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
+                        <div class="text-4xl font-bold mb-2">50K+</div>
+                        <div class="text-lg">Active Creators</div>
+                    </div>
+                    <div class="stats-card-2 p-8 rounded-2xl transform hover:scale-105 transition-all duration-300">
+                        <div class="text-4xl font-bold mb-2">2M+</div>
+                        <div class="text-lg">MVS Tokens Earned</div>
+                    </div>
+                    <div class="stats-card-3 p-8 rounded-2xl text-gray-800 transform hover:scale-105 transition-all duration-300">
+                        <div class="text-4xl font-bold mb-2">100K+</div>
+                        <div class="text-lg">NFTs Traded</div>
+                    </div>
+                    <div class="stats-card-4 p-8 rounded-2xl text-gray-800 transform hover:scale-105 transition-all duration-300">
+                        <div class="text-4xl font-bold mb-2">$5M+</div>
+                        <div class="text-lg">Total Volume</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Content -->
+        <section class="py-24 bg-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16">Featured Content</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="nft-card bg-gray-700 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Digital Masterpiece #001</h3>
+                            <p class="text-gray-400 mb-4">by @ArtistPro • Earned 250 MVS</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-400 font-bold">Featured</span>
+                                <button class="btn-gradient px-4 py-2 rounded-lg text-sm">View</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-700 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-blue-500 via-teal-500 to-green-500"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Ocean Dreams Collection</h3>
+                            <p class="text-gray-400 mb-4">by @SeaCreator • Earned 180 MVS</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-blue-400 font-bold">Trending</span>
+                                <button class="btn-gradient px-4 py-2 rounded-lg text-sm">View</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-700 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Cosmic Journey Series</h3>
+                            <p class="text-gray-400 mb-4">by @SpaceArt • Earned 320 MVS</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-yellow-400 font-bold">Popular</span>
+                                <button class="btn-gradient px-4 py-2 rounded-lg text-sm">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Upload Content Page -->
+    <div id="upload" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">Upload Your Content & Earn MVS</h1>
+                    <p class="text-xl text-gray-400">Share your creativity with the world and get rewarded with MVS tokens</p>
+                </div>
+                
+                <div class="glass-effect p-10 rounded-2xl">
+                    <form onsubmit="uploadContent(event)" class="space-y-8">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Content Title</label>
+                                <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Enter your content title">
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Content Type</label>
+                                <select class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg">
+                                    <option>🎥 Video Content</option>
+                                    <option>🖼️ Digital Art</option>
+                                    <option>🎵 Audio/Music</option>
+                                    <option>📝 Written Article</option>
+                                    <option>🎮 3D Model/Game Asset</option>
+                                    <option>📸 Photography</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-medium mb-3">Description</label>
+                            <textarea class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none h-40 text-lg" placeholder="Describe your content in detail..."></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-medium mb-3">Upload File</label>
+                            <div class="border-2 border-dashed border-gray-600 rounded-xl p-12 text-center hover:border-purple-500 transition-all cursor-pointer bg-gray-800 hover:bg-gray-750">
+                                <div class="text-6xl mb-6">📁</div>
+                                <p class="text-xl mb-2">Drag & drop your file here or click to browse</p>
+                                <p class="text-gray-400">Supported formats: MP4, JPG, PNG, GIF, MP3, WAV, PDF, ZIP</p>
+                                <p class="text-gray-400 mt-2">Max file size: 500MB</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Tags</label>
+                                <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="art, digital, creative">
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Category</label>
+                                <select class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg">
+                                    <option>Art & Design</option>
+                                    <option>Music & Audio</option>
+                                    <option>Gaming</option>
+                                    <option>Photography</option>
+                                    <option>Education</option>
+                                    <option>Entertainment</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Expected MVS Reward</label>
+                                <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 text-lg text-green-400 font-bold" value="50-500 MVS" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-4">💡 Earning Tips</h3>
+                            <ul class="space-y-2 text-gray-300">
+                                <li>• High-quality content earns more MVS tokens</li>
+                                <li>• Engaging descriptions increase visibility</li>
+                                <li>• Proper tags help users discover your content</li>
+                                <li>• Regular uploads build your creator reputation</li>
+                            </ul>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn-gradient text-white py-4 rounded-xl font-bold text-xl">
+                            🚀 Upload & Earn MVS Tokens
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Recent Uploads -->
+                <div class="mt-20">
+                    <h2 class="text-3xl font-bold mb-10">Your Recent Uploads</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-750 transition-all">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">Digital Sunset Landscape</h3>
+                                <span class="bg-green-500 text-sm px-3 py-1 rounded-full">+150 MVS</span>
+                            </div>
+                            <p class="text-gray-400 text-sm mb-4">Uploaded 2 days ago • 1.2K views • 89 likes</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-green-400">Performance: Excellent ⭐</span>
+                                <button class="text-purple-400 hover:text-purple-300 font-medium">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-750 transition-all">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">Abstract Music Visualization</h3>
+                                <span class="bg-green-500 text-sm px-3 py-1 rounded-full">+89 MVS</span>
+                            </div>
+                            <p class="text-gray-400 text-sm mb-4">Uploaded 5 days ago • 856 views • 67 likes</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-blue-400">Performance: Good 👍</span>
+                                <button class="text-purple-400 hover:text-purple-300 font-medium">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-750 transition-all">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">3D Character Model</h3>
+                                <span class="bg-green-500 text-sm px-3 py-1 rounded-full">+220 MVS</span>
+                            </div>
+                            <p class="text-gray-400 text-sm mb-4">Uploaded 1 week ago • 2.1K views • 156 likes</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-green-400">Performance: Outstanding 🔥</span>
+                                <button class="text-purple-400 hover:text-purple-300 font-medium">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NFT Categories Pages -->
+    <div id="nfts-art" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">🎨 Digital Art NFTs</h1>
+                    <p class="text-xl text-gray-400">Discover amazing digital artworks from talented creators</p>
+                </div>
+                
+                <!-- Filter Bar -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="bg-purple-600 text-white px-6 py-2 rounded-full font-medium">All Art</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full font-medium transition-all">Abstract</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full font-medium transition-all">Portraits</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full font-medium transition-all">Landscapes</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full font-medium transition-all">3D Art</button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-pink-500 to-purple-600"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Cosmic Dreams #001</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @ArtistMike</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">2.5 ETH</span>
+                                <span class="text-green-400 text-sm">24 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-blue-500 to-green-600"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Ocean Waves #042</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @SeaArtist</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">1.8 ETH</span>
+                                <span class="text-green-400 text-sm">12 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-red-500 to-orange-600"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Fire Phoenix #007</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @PhoenixCreator</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">3.2 ETH</span>
+                                <span class="text-green-400 text-sm">31 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-indigo-500 to-purple-600"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Galaxy Portal #156</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @SpaceArt</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">4.1 ETH</span>
+                                <span class="text-green-400 text-sm">45 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-teal-500 to-blue-600"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Neon City #089</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @CyberArt</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">2.9 ETH</span>
+                                <span class="text-green-400 text-sm">18 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-yellow-500 to-pink-600"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Golden Hour #023</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @SunsetCreator</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">1.5 ETH</span>
+                                <span class="text-green-400 text-sm">8 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-16">
+                    <button class="btn-gradient-2 text-white px-10 py-4 rounded-full font-bold text-lg">
+                        Load More Art NFTs
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music NFTs Page -->
+    <div id="nfts-music" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">🎵 Music & Audio NFTs</h1>
+                    <p class="text-xl text-gray-400">Discover exclusive music tracks and audio experiences</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                            <div class="text-8xl">🎵</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Synthwave Dreams</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @BeatMaker</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">1.5 ETH</span>
+                                <span class="text-green-400 text-sm">15 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-blue-500 to-teal-600 flex items-center justify-center">
+                            <div class="text-8xl">🎧</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Electronic Vibes</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @EDMPro</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">2.1 ETH</span>
+                                <span class="text-green-400 text-sm">28 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gaming NFTs Page -->
+    <div id="nfts-gaming" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">🎮 Gaming NFTs</h1>
+                    <p class="text-xl text-gray-400">Rare gaming items, characters, and in-game assets</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-green-500 to-blue-600 flex items-center justify-center">
+                            <div class="text-8xl">⚔️</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Legendary Sword</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @GameDev</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">0.8 ETH</span>
+                                <span class="text-green-400 text-sm">9 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collectibles NFTs Page -->
+    <div id="nfts-collectibles" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">💎 Collectibles NFTs</h1>
+                    <p class="text-xl text-gray-400">Unique collectible items and rare digital assets</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-yellow-500 to-red-600 flex items-center justify-center">
+                            <div class="text-8xl">💎</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Rare Diamond #001</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @Collector</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">5.0 ETH</span>
+                                <span class="text-green-400 text-sm">52 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photography NFTs Page -->
+    <div id="nfts-photography" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">📸 Photography NFTs</h1>
+                    <p class="text-xl text-gray-400">Stunning photographs and visual stories</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                        <div class="h-64 bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center">
+                            <div class="text-8xl">📸</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Mountain Sunrise</h3>
+                            <p class="text-gray-400 text-sm mb-4">by @NaturePhoto</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-yellow-400 font-bold text-lg">1.2 ETH</span>
+                                <span class="text-green-400 text-sm">7 bids</span>
+                            </div>
+                            <button class="w-full btn-gradient text-white py-2 rounded-lg font-medium">Place Bid</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trending Page -->
+    <div id="trending" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">🔥 Trending NFTs</h1>
+                    <p class="text-xl text-gray-400">Discover the hottest NFTs and rising creators</p>
+                </div>
+                
+                <!-- Trending Stats -->
+                <div class="grid md:grid-cols-4 gap-6 mb-16">
+                    <div class="stats-card p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-white">+245%</div>
+                        <div class="text-sm text-white">Volume Growth</div>
+                    </div>
+                    <div class="stats-card-2 p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-white">1,247</div>
+                        <div class="text-sm text-white">Active Traders</div>
+                    </div>
+                    <div class="stats-card-3 p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-gray-800">89</div>
+                        <div class="text-sm text-gray-800">New Listings</div>
+                    </div>
+                    <div class="stats-card-4 p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-gray-800">156 ETH</div>
+                        <div class="text-sm text-gray-800">24h Volume</div>
+                    </div>
+                </div>
+                
+                <!-- Featured Trending -->
+                <div class="mb-16">
+                    <h2 class="text-3xl font-bold mb-10">🌟 Featured This Week</h2>
+                    <div class="grid md:grid-cols-3 gap-10">
+                        <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                            <div class="h-80 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500"></div>
+                            <div class="p-8">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="font-bold text-xl">Neon City #001</h3>
+                                    <span class="bg-red-500 text-xs px-3 py-1 rounded-full animate-pulse">HOT 🔥</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-6">by @CyberArtist • 24h volume: 15.2 ETH</p>
+                                <div class="flex justify-between items-center mb-6">
+                                    <span class="text-yellow-400 font-bold text-xl">8.5 ETH</span>
+                                    <span class="text-green-400 text-sm">67 bids</span>
+                                </div>
+                                <button class="w-full btn-gradient-2 text-white py-3 rounded-lg font-bold">Place Bid</button>
+                            </div>
+                        </div>
+                        
+                        <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                            <div class="h-80 bg-gradient-to-br from-blue-500 via-teal-500 to-green-500"></div>
+                            <div class="p-8">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="font-bold text-xl">Ocean Depths #042</h3>
+                                    <span class="bg-orange-500 text-xs px-3 py-1 rounded-full">RISING 📈</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-6">by @AquaCreator • 24h volume: 12.8 ETH</p>
+                                <div class="flex justify-between items-center mb-6">
+                                    <span class="text-yellow-400 font-bold text-xl">6.2 ETH</span>
+                                    <span class="text-green-400 text-sm">43 bids</span>
+                                </div>
+                                <button class="w-full btn-gradient-2 text-white py-3 rounded-lg font-bold">Place Bid</button>
+                            </div>
+                        </div>
+                        
+                        <div class="nft-card bg-gray-800 rounded-2xl overflow-hidden">
+                            <div class="h-80 bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500"></div>
+                            <div class="p-8">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="font-bold text-xl">Solar Flare #007</h3>
+                                    <span class="bg-green-500 text-xs px-3 py-1 rounded-full">NEW ✨</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-6">by @SolarArt • 24h volume: 9.4 ETH</p>
+                                <div class="flex justify-between items-center mb-6">
+                                    <span class="text-yellow-400 font-bold text-xl">4.8 ETH</span>
+                                    <span class="text-green-400 text-sm">29 bids</span>
+                                </div>
+                                <button class="w-full btn-gradient-2 text-white py-3 rounded-lg font-bold">Place Bid</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trending Categories -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-10">📊 Trending by Category</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="glass-effect p-6 rounded-xl text-center hover:scale-105 transition-all duration-300">
+                            <div class="text-4xl mb-4">🎨</div>
+                            <h3 class="font-bold text-lg mb-2">Digital Art</h3>
+                            <p class="text-green-400 font-bold">+156% 📈</p>
+                        </div>
+                        
+                        <div class="glass-effect p-6 rounded-xl text-center hover:scale-105 transition-all duration-300">
+                            <div class="text-4xl mb-4">🎵</div>
+                            <h3 class="font-bold text-lg mb-2">Music</h3>
+                            <p class="text-green-400 font-bold">+89% 📈</p>
+                        </div>
+                        
+                        <div class="glass-effect p-6 rounded-xl text-center hover:scale-105 transition-all duration-300">
+                            <div class="text-4xl mb-4">🎮</div>
+                            <h3 class="font-bold text-lg mb-2">Gaming</h3>
+                            <p class="text-green-400 font-bold">+234% 📈</p>
+                        </div>
+                        
+                        <div class="glass-effect p-6 rounded-xl text-center hover:scale-105 transition-all duration-300">
+                            <div class="text-4xl mb-4">📸</div>
+                            <h3 class="font-bold text-lg mb-2">Photography</h3>
+                            <p class="text-green-400 font-bold">+67% 📈</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create NFT Page -->
+    <div id="create-nft" class="page">
+        <div class="min-h-screen bg-gray-900 py-20">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold mb-6">Create & Mint Your NFT</h1>
+                    <p class="text-xl text-gray-400">Turn your creativity into valuable digital assets</p>
+                </div>
+                
+                <div class="glass-effect p-10 rounded-2xl">
+                    <form onsubmit="createNFT(event)" class="space-y-8">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="block text-lg font-medium mb-3">NFT Name</label>
+                                <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="My Awesome NFT">
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Collection</label>
+                                <select class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg">
+                                    <option>Create New Collection</option>
+                                    <option>My Art Collection</option>
+                                    <option>Digital Dreams</option>
+                                    <option>Abstract Worlds</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-medium mb-3">Upload Artwork</label>
+                            <div class="border-2 border-dashed border-gray-600 rounded-xl p-16 text-center hover:border-purple-500 transition-all cursor-pointer bg-gray-800">
+                                <div class="text-8xl mb-6">🎨</div>
+                                <p class="text-2xl mb-4">Drag & drop your artwork here</p>
+                                <p class="text-gray-400">PNG, JPG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF</p>
+                                <p class="text-gray-400 mt-2">Max file size: 100MB</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-medium mb-3">Description</label>
+                            <textarea class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none h-40 text-lg" placeholder="Describe your NFT in detail..."></textarea>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Price (ETH)</label>
+                                <input type="number" step="0.001" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="0.1">
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Royalties (%)</label>
+                                <input type="number" max="10" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="5">
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium mb-3">Supply</label>
+                                <input type="number" min="1" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="1">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-medium mb-3">Properties (Optional)</label>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Property name (e.g., Color)">
+                                <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Property value (e.g., Blue)">
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-8 rounded-xl">
+                            <h3 class="text-xl font-bold mb-6">💰 Minting Cost Breakdown</h3>
+                            <div class="space-y-3 text-lg">
+                                <div class="flex justify-between">
+                                    <span>Gas Fee (estimated):</span>
+                                    <span class="text-yellow-400 font-bold">0.008 ETH</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Platform Fee (2.5%):</span>
+                                    <span class="text-yellow-400 font-bold">0.0025 ETH</span>
+                                </div>
+                                <div class="flex justify-between font-bold border-t border-gray-600 pt-3 text-xl">
+                                    <span>Total Cost:</span>
+                                    <span class="text-green-400">0.0105 ETH</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn-gradient-2 text-white py-4 rounded-xl font-bold text-xl">
+                            🚀 Create & Mint NFT
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page">
+        <div class="min-h-screen flex items-center justify-center px-4 gradient-bg-3">
+            <div class="max-w-md w-full glass-effect p-10 rounded-2xl">
+                <div class="text-center mb-10">
+                    <div class="mb-6">
+                        <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
+                            <circle cx="20" cy="20" r="18" fill="url(#gradient2)" stroke="white" stroke-width="2"/>
+                            <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea"/>
+                                    <stop offset="50%" style="stop-color:#764ba2"/>
+                                    <stop offset="100%" style="stop-color:#f093fb"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h2 class="text-4xl font-bold mb-3">Welcome Back</h2>
+                    <p class="text-gray-300 text-lg">Sign in to your MemVerse account</p>
+                </div>
+                
+                <form onsubmit="handleLogin(event)" class="space-y-6">
+                    <div>
+                        <label class="block text-lg font-medium mb-3">Email or Username</label>
+                        <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Enter your email">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-medium mb-3">Password</label>
+                        <input type="password" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Enter your password">
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3 w-4 h-4">
+                            <span class="text-lg">Remember me</span>
+                        </label>
+                        <a href="#" class="text-lg text-purple-400 hover:text-purple-300">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="w-full btn-gradient text-white py-4 rounded-xl font-bold text-lg">Sign In</button>
+                </form>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-300 text-lg">Don't have an account? <button onclick="showPage('signup')" class="text-purple-400 hover:text-purple-300 font-bold">Sign up</button></p>
+                </div>
+                
+                <div class="mt-8">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-600"></div>
+                        </div>
+                        <div class="relative flex justify-center text-lg">
+                            <span class="px-4 bg-gray-900 text-gray-400">Or continue with</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 grid grid-cols-2 gap-4">
+                        <button class="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 px-4 rounded-xl font-bold transition-all">🦊 MetaMask</button>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-bold transition-all">🔗 WalletConnect</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup" class="page">
+        <div class="min-h-screen flex items-center justify-center px-4 gradient-bg-2">
+            <div class="max-w-md w-full glass-effect p-10 rounded-2xl">
+                <div class="text-center mb-10">
+                    <div class="mb-6">
+                        <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
+                            <circle cx="20" cy="20" r="18" fill="url(#gradient3)" stroke="white" stroke-width="2"/>
+                            <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea"/>
+                                    <stop offset="50%" style="stop-color:#764ba2"/>
+                                    <stop offset="100%" style="stop-color:#f093fb"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h2 class="text-4xl font-bold mb-3">Join MemVerse</h2>
+                    <p class="text-gray-300 text-lg">Create your account and start earning</p>
+                </div>
+                
+                <form onsubmit="handleSignup(event)" class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-lg font-medium mb-3">First Name</label>
+                            <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="John">
+                        </div>
+                        <div>
+                            <label class="block text-lg font-medium mb-3">Last Name</label>
+                            <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Doe">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-medium mb-3">Username</label>
+                        <input type="text" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="@username">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-medium mb-3">Email</label>
+                        <input type="email" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="john@example.com">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-medium mb-3">Password</label>
+                        <input type="password" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Create a strong password">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-medium mb-3">Confirm Password</label>
+                        <input type="password" class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:outline-none text-lg" placeholder="Confirm your password">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" class="mr-3 w-4 h-4" required>
+                        <span class="text-lg">I agree to the <a href="#" class="text-purple-400 hover:text-purple-300">Terms of Service</a> and <a href="#" class="text-purple-400 hover:text-purple-300">Privacy Policy</a></span>
+                    </div>
+                    
+                    <button type="submit" class="w-full btn-gradient-2 text-white py-4 rounded-xl font-bold text-lg">Create Account</button>
+                </form>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-300 text-lg">Already have an account? <button onclick="showPage('login')" class="text-purple-400 hover:text-purple-300 font-bold">Sign in</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Pag
